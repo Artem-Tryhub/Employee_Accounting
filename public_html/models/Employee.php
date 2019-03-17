@@ -2,11 +2,14 @@
 
 class Employee
 {
-    public static function getAll()
+    public static function getAll($showDefault = 0, $page = 1)
     {
+        $offset = ($page - 1) * $showDefault;
         $db = Db::getConnection();
         $query = 'SELECT * '
-                .'FROM employees ORDER BY id ASC';
+            . 'FROM employees ORDER BY id ASC '
+            . 'LIMIT ' . $showDefault
+            . ' OFFSET ' . $offset;
         $result = $db->query($query);
         $employeesList = array();
         $i = 0;
@@ -25,5 +28,17 @@ class Employee
         return $employeesList;
     }
 
+    public static function getTotalAmount()
+    {
+        $db = Db::getConnection();
+        $query = "SELECT COUNT(id) FROM employees";
+        $result = $db->query($query);
+        $result = $result->fetch();
+        return $result['COUNT(id)'];
+    }
 
+    public static function getByDepartment($departName)
+    {
+
+    }
 }
