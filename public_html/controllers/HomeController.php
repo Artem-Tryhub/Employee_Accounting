@@ -4,7 +4,8 @@ class HomeController
 {
     public function actionIndex()
     {
-        print('This homepage controller!');
-        die;
+
+
+        require_once (ROOT . '/views/home/index.php');
     }
 }
