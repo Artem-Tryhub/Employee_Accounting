@@ -1,19 +1,15 @@
-<html>
-<head>
-    <title>Employees</title>
-</head>
-<body>
-<h2>Employee list</h2>
-<table border="1">
+<?php include_once (ROOT . '/views/layout/header.php'); ?>
+<h2 align="center">Список сотрудников</h2>
+<table border="1" align="center">
     <tr>
-        <td>Name</td>
-        <td>Surname</td>
-        <td>Patronymic</td>
-        <td>Birthday</td>
-        <td>Department</td>
-        <td>Post</td>
-        <td>Payment type</td>
-        <td>Salary</td>
+        <td>Имя</td>
+        <td>Фамиия</td>
+        <td>Отчество</td>
+        <td>День рождения</td>
+        <td>Отдел</td>
+        <td>Должность</td>
+        <td>Тип оплаты</td>
+        <td>Зарплата</td>
     </tr>
     <?php foreach ($employees as $employee): ?>
         <tr>
@@ -27,6 +23,16 @@
             <td><?= $employee['salary'] ?></td>
         </tr>
     <?php endforeach; ?>
+    Количество сотрудников на страницу
+    <form action="" method="post">
+        <select name="numberEmployees">
+            <option value="20">20</option>
+            <option value="40">40</option>
+            <option value="60">60</option>
+            <option value="80">80</option>
+        </select>
+       <input type="submit" value="Отправить">
+    </form>
 </table>
-</body>
-</html>
+    <h4 align="center"><?= $pagination->get(); ?></h4>
+<?php include_once (ROOT . '/views/layout/footer.php'); ?>
