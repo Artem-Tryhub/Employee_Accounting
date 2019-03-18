@@ -16,4 +16,15 @@ class Department
         }
         return $departmentsList;
     }
+
+    public static function getDepartId($departName)
+    {
+        $db = Db::getConnection();
+        $query = "SELECT id FROM departments WHERE name = :departName";
+        $result = $db->prepare($query);
+        $result->bindParam(':departName', $departName, PDO::PARAM_STR);
+        $result->execute();
+        $result = $result->fetch();
+        return $result['id'];
+    }
 }
