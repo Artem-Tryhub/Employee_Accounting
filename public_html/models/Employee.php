@@ -6,11 +6,11 @@ class Employee
     {
         $offset = ($page - 1) * $showDefault;
         $db = Db::getConnection();
-        $query = 'SELECT * '
-            . 'FROM employees ORDER BY id ASC '
-            . 'LIMIT ' . $showDefault
-            . ' OFFSET ' . $offset;
-        $result = $db->query($query);
+        $query = "SELECT * FROM employees ORDER BY id ASC LIMIT :showDefault OFFSET :offset";
+        $result = $db->prepare($query);
+        $result->bindParam(':showDefault', $showDefault, PDO::PARAM_INT);
+        $result->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $result->execute();
         $employeesList = array();
         $i = 0;
         while ($row = $result->fetch()) {
@@ -64,7 +64,7 @@ class Employee
     public static function getByPost($postId)
     {
         $db = Db::getConnection();
-        $query = "SELECT * FROM employees WHERE  id_posts = :postId";
+        $query = "SELECT * FROM employees WHERE id_posts = :postId";
         $result = $db->prepare($query);
         $result->bindParam(':postId', $postId, PDO::PARAM_INT);
         $result->execute();
@@ -81,7 +81,6 @@ class Employee
             $employeesList[$i]['salary'] = $row['salary'];
             $i++;
         }
-
         return $employeesList;
     }
 }
